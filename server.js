@@ -16,6 +16,7 @@ app.use(session({
 
 function loadEnv() {
   const envPath = path.join(__dirname, "..", "env.txt");
+  if (!fs.existsSync(envPath)) return {};
   const raw = fs.readFileSync(envPath, "utf-8");
   const env = {};
   for (const line of raw.split("\n")) {
@@ -31,7 +32,6 @@ function loadEnv() {
 }
 
 const env = loadEnv();
-
 const SPOTIFY_CLIENT_ID = env.spotify_client_id || "";
 const SPOTIFY_CLIENT_SECRET = env.spotify_client_secret || "";
 
@@ -50,6 +50,9 @@ function sleep(ms) {
 }
 
 function ensureSession(req) {
+  if (!req.session.spotifyTokens) {
+    req.session.spotifyTokens = { access: "", refresh: "", expiresAt: 0 };
+  }
   if (!req.session.syncState) {
     req.session.syncState = {
       running: false,
@@ -58,9 +61,6 @@ function ensureSession(req) {
       log: [],
       playlistUrl: null,
     };
-  }
-  if (!req.session.spotifyTokens) {
-    req.session.spotifyTokens = { access: "", refresh: "", expiresAt: 0 };
   }
 }
 
@@ -118,8 +118,8 @@ async function getSpotifyAccessToken(req) {
   throw new Error("NO_SPOTIFY_AUTH");
 }
 
-async function discogsRequest(req, path, params = {}) {
-  const url = new URL(path, DISCOGS_BASE);
+async function discogsRequest(req, apiPath, params = {}) {
+  const url = new URL(apiPath, DISCOGS_BASE);
   for (const [k, v] of Object.entries(params)) {
     url.searchParams.set(k, v);
   }
@@ -136,11 +136,11 @@ async function discogsRequest(req, path, params = {}) {
   return res.json();
 }
 
-async function spotifyUserRequest(req, path, opts = {}) {
+async function spotifyUserRequest(req, apiPath, opts = {}) {
   const token = await getSpotifyAccessToken(req);
-  const url = path.startsWith("http") ? path : `${SPOTIFY_BASE}${path}`;
+  const url = apiPath.startsWith("http") ? apiPath : `${SPOTIFY_BASE}${apiPath}`;
   const doFetch = async (t) => {
-    const res = await fetch(url, {
+    return fetch(url, {
       ...opts,
       headers: {
         Authorization: `Bearer ${t}`,
@@ -148,7 +148,6 @@ async function spotifyUserRequest(req, path, opts = {}) {
         ...opts.headers,
       },
     });
-    return res;
   };
 
   let res = await doFetch(token);
@@ -163,9 +162,9 @@ async function spotifyUserRequest(req, path, opts = {}) {
   return text ? JSON.parse(text) : null;
 }
 
-async function spotifyClientRequest(path) {
+async function spotifyClientRequest(apiPath) {
   const token = await getClientCredentialsToken();
-  const url = path.startsWith("http") ? path : `${SPOTIFY_BASE}${path}`;
+  const url = apiPath.startsWith("http") ? apiPath : `${SPOTIFY_BASE}${apiPath}`;
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -224,7 +223,6 @@ async function runSync(req) {
     st.currentStep = "Getting Discogs collection folders";
     const foldersData = await discogsRequest(req, `/users/${username}/collection/folders`);
     const folders = foldersData.folders || [];
-
     sessionLog(req, `Found ${folders.length} folder(s)`);
 
     const trackUris = [];

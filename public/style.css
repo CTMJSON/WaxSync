@@ -43,6 +43,12 @@ h3 {
   color: #1db954;
 }
 
+.field-status {
+  font-size: 0.85rem;
+  margin-top: 4px;
+  min-height: 1.2em;
+}
+
 input {
   width: 100%;
   padding: 10px 14px;

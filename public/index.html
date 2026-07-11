@@ -18,13 +18,14 @@
       <div class="actions" style="margin-top:10px">
         <button id="discogs-btn" onclick="setDiscogsToken()">Connect Discogs</button>
       </div>
-      <div id="discogs-status" class="hint"></div>
+      <div id="discogs-status" class="field-status"></div>
     </div>
 
-    <div class="card" id="spotify-card" style="opacity:0.5">
+    <div class="card" id="auth-card" style="opacity:0.5">
       <h3>Step 2: Spotify</h3>
+      <p class="hint">Log in with your Spotify account to grant playlist access.</p>
       <div class="actions" style="margin-top:10px">
-        <button id="login-btn" onclick="login()">Login with Spotify</button>
+        <button id="login-btn" onclick="login()" disabled>Login with Spotify</button>
       </div>
       <div class="status-row" style="margin-top:8px">
         <span id="auth-status">Not connected</span>

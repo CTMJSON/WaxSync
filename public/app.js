@@ -23,11 +23,11 @@ async function setDiscogsToken() {
       discogsSet = true;
       $("discogs-status").textContent = "Connected as " + data.username;
       $("discogs-status").style.color = "#1db954";
-      $("discogs-card").style.opacity = "1";
-      $("spotify-card").style.opacity = "1";
+      $("discogs-card").querySelector("input").disabled = true;
+      $("auth-card").style.opacity = "1";
+      $("login-btn").disabled = false;
       btn.textContent = "Connected";
       btn.style.opacity = "0.6";
-      updateSyncButton();
     } else {
       $("discogs-status").textContent = "Error: " + (data.error || "Invalid token");
       $("discogs-status").style.color = "#ff6b6b";
@@ -116,14 +116,17 @@ function updateUI(state) {
     $("playlist-url").href = state.playlistUrl;
   }
 
-  if (discogsSet && !$("discogs-card").querySelector("input").disabled) {
+  if (discogsSet) {
     $("discogs-card").querySelector("input").disabled = true;
+    $("discogs-btn").textContent = "Connected";
+    $("discogs-btn").style.opacity = "0.6";
+    $("auth-card").style.opacity = "1";
+    $("login-btn").disabled = false;
   }
 
   if (spotifyAuthed) {
     $("auth-status").textContent = "Connected";
     $("auth-status").style.color = "#1db954";
-    $("spotify-card").style.opacity = "1";
     $("login-btn").style.display = "none";
     $("sync-card").style.opacity = "1";
   } else {
@@ -140,7 +143,7 @@ function updateSyncButton() {
     btn.textContent = "Sync Discogs to Spotify";
   } else {
     btn.disabled = true;
-    if (!discogsSet) btn.textContent = "Set Discogs token first";
+    if (!discogsSet) btn.textContent = "Enter Discogs token first";
     else if (!spotifyAuthed) btn.textContent = "Login with Spotify first";
   }
 }

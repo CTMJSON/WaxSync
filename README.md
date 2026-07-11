@@ -13,7 +13,6 @@ A web app that copies your Discogs vinyl collection to a Spotify playlist. It re
 1. A computer with **Node.js** installed ([download here](https://nodejs.org/))
 2. A **Discogs account** with a Personal Access Token
 3. A **Spotify account** (free or premium)
-4. Spotify API credentials (either from the app owner, or create your own -- see Step 3)
 
 > **You do NOT need** a server, domain name, or paid services. Everything runs on your computer.
 
@@ -50,28 +49,9 @@ This token lets the app read your collection.
 
 ---
 
-### 3. Set Up Spotify API Access
+### 3. Spotify Setup (For the Developer / Host)
 
-You have two options:
-
----
-
-#### Option A: Use the App Owner's Credentials (Easiest)
-
-If the person who set up this app has shared their Spotify credentials with you, simply create the `env.txt` file in the `discogs-to-spotify` folder with those values:
-
-```
-spotify_client_id:THEIR_CLIENT_ID_HERE
-spotify_client_secret:THEIR_CLIENT_SECRET_HERE
-```
-
-**This is all you need.** You will still log in with **your own** Spotify account in Step 2 of the app. The app owner's credentials are only used to talk to Spotify's API -- playlists are created in YOUR account.
-
----
-
-#### Option B: Create Your Own Spotify Developer App
-
-If you prefer to use your own app credentials:
+The person running the server needs to create ONE Spotify Developer App. All users share this app -- they only authenticate with their own Spotify accounts.
 
 1. Go to [https://developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
 2. Log in with your Spotify account
@@ -79,25 +59,24 @@ If you prefer to use your own app credentials:
 4. Fill in the form:
    - **App name**: `Discogs Sync` (or anything)
    - **App description**: `Syncs my Discogs collection to Spotify`
-   - **Redirect URI**: Leave blank for now (you'll add it in Step 7)
+   - **Redirect URI**: Leave blank for now (you'll add it in Step 6)
    - Check the terms box
 5. Click **"Save"**
 6. Click **"Settings"**, then copy your **Client ID**
 7. Click **"View client secret"** and copy your **Client Secret**
-8. Create `env.txt` in the `discogs-to-spotify` folder:
+
+Create an `env.txt` file one level above the project folder:
 
 ```
 spotify_client_id:YOUR_CLIENT_ID_HERE
 spotify_client_secret:YOUR_CLIENT_SECRET_HERE
 ```
 
----
-
-> **Important:** Never commit `env.txt` to GitHub or share it publicly. It is already in `.gitignore`.
+> **End users do NOT need to create a Spotify app.** They just log into their own Spotify account when using the app.
 
 ---
 
-### 5. Download This Project
+### 4. Download This Project
 
 **Option A: Download as ZIP**
 1. Click the green **"Code"** button at the top of this page
@@ -112,7 +91,7 @@ cd discogs-to-spotify
 
 ---
 
-### 6. Run the App
+### 5. Run the App
 
 Open **Terminal** (Mac/Linux) or **Command Prompt** (Windows), navigate to the `discogs-to-spotify` folder, and run:
 
@@ -142,7 +121,7 @@ Public URL: https://red-snail-walk.loca.lt
 
 ---
 
-### 7. Add the Redirect URI to Spotify
+### 6. Add the Redirect URI to Spotify
 
 1. Copy the URL shown in the terminal (e.g. `https://red-snail-walk.loca.lt/api/callback`)
 2. Go back to your [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
@@ -153,7 +132,7 @@ Public URL: https://red-snail-walk.loca.lt
 
 ---
 
-### 8. Open the App
+### 7. Open the App
 
 Open the **App URL** shown in the terminal (e.g. `https://red-snail-walk.loca.lt`) in your web browser.
 
