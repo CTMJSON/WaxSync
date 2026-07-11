@@ -1,4 +1,5 @@
-# Discogs to Spotify Sync
+# WaxSync a Discogs to Spotify Sync
+<img width="1376" height="768" alt="Gemini_Generated_Image_gfhv09gfhv09gfhv (1)" src="https://github.com/user-attachments/assets/30d55140-49da-42e7-b79c-f5c719eaa9d2" />
 
 A web app that copies your Discogs vinyl collection to a Spotify playlist. It reads every album and every track from your Discogs collection, finds each track on Spotify, and builds a playlist called **"record collection"**.
 
