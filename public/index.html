@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discogs to Spotify</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Discogs to Spotify</h1>
+    <p class="subtitle">Sync your Discogs vinyl collection to a Spotify playlist.</p>
+
+    <div class="card" id="discogs-card">
+      <h3>Step 1: Discogs</h3>
+      <p class="hint">Get your token from <a href="https://www.discogs.com/settings/developers" target="_blank">Discogs Developer Settings</a></p>
+      <input type="password" id="discogs-token" placeholder="Paste your Discogs personal access token">
+      <div class="actions" style="margin-top:10px">
+        <button id="discogs-btn" onclick="setDiscogsToken()">Connect Discogs</button>
+      </div>
+      <div id="discogs-status" class="hint"></div>
+    </div>
+
+    <div class="card" id="spotify-card" style="opacity:0.5">
+      <h3>Step 2: Spotify</h3>
+      <div class="actions" style="margin-top:10px">
+        <button id="login-btn" onclick="login()">Login with Spotify</button>
+      </div>
+      <div class="status-row" style="margin-top:8px">
+        <span id="auth-status">Not connected</span>
+      </div>
+    </div>
+
+    <div class="card" id="sync-card" style="opacity:0.5">
+      <h3>Step 3: Sync</h3>
+      <div class="status-row">
+        <span>Status:</span>
+        <strong id="status-text">Idle</strong>
+      </div>
+      <div class="status-row">
+        <span>Current step:</span>
+        <span id="current-step">-</span>
+      </div>
+      <div class="progress-card">
+        <div class="progress-item">
+          <span>Albums processed</span>
+          <strong id="val-albums">0</strong>
+        </div>
+        <div class="progress-item">
+          <span>Total tracks</span>
+          <strong id="val-tracks">0</strong>
+        </div>
+        <div class="progress-item">
+          <span>Tracks found</span>
+          <strong id="val-found">0</strong>
+        </div>
+        <div class="progress-item">
+          <span>Tracks added</span>
+          <strong id="val-added">0</strong>
+        </div>
+        <div class="progress-item">
+          <span>Skipped / not found</span>
+          <strong id="val-skipped">0</strong>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button id="sync-btn" onclick="startSync()" disabled>Sync Discogs to Spotify</button>
+      </div>
+      <div id="playlist-link" class="playlist-link hidden">
+        <a id="playlist-url" href="#" target="_blank">Open Playlist on Spotify</a>
+      </div>
+    </div>
+
+    <div class="card log-card">
+      <h3>Log</h3>
+      <pre id="log-output"></pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

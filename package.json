@@ -1,0 +1,13 @@
+{
+  "name": "discogs-to-spotify",
+  "version": "1.0.0",
+  "description": "Sync Discogs collection to a Spotify playlist",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-session": "^1.19.0"
+  }
+}
