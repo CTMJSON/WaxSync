@@ -42,7 +42,7 @@ This token lets the app read your collection.
 2. If you're not logged in, log into your Discogs account
 3. Click the **"Generate new token"** button
 4. Copy the long string of letters and numbers that appears
-   > It looks something like: `iFXrJFEShmRBYLYZbYjMs...`
+   > It looks something like: `AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKl`
 5. Save this token somewhere safe -- you'll paste it into the app later
 
 > **Important:** Never share this token with anyone. It gives access to your Discogs account.
