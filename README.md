@@ -12,7 +12,8 @@ A web app that copies your Discogs vinyl collection to a Spotify playlist. It re
 
 1. A computer with **Node.js** installed ([download here](https://nodejs.org/))
 2. A **Discogs account** with a Personal Access Token
-3. A **Spotify account** (free or premium) with a Developer App
+3. A **Spotify account** (free or premium)
+4. Spotify API credentials (either from the app owner, or create your own -- see Step 3)
 
 > **You do NOT need** a server, domain name, or paid services. Everything runs on your computer.
 
@@ -49,35 +50,48 @@ This token lets the app read your collection.
 
 ---
 
-### 3. Create a Spotify Developer App
+### 3. Set Up Spotify API Access
 
-This gives the app permission to create playlists in your Spotify account.
+You have two options:
+
+---
+
+#### Option A: Use the App Owner's Credentials (Easiest)
+
+If the person who set up this app has shared their Spotify credentials with you, simply create the `env.txt` file in the `discogs-to-spotify` folder with those values:
+
+```
+spotify_client_id:THEIR_CLIENT_ID_HERE
+spotify_client_secret:THEIR_CLIENT_SECRET_HERE
+```
+
+**This is all you need.** You will still log in with **your own** Spotify account in Step 2 of the app. The app owner's credentials are only used to talk to Spotify's API -- playlists are created in YOUR account.
+
+---
+
+#### Option B: Create Your Own Spotify Developer App
+
+If you prefer to use your own app credentials:
 
 1. Go to [https://developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
 2. Log in with your Spotify account
 3. Click **"Create app"**
 4. Fill in the form:
-   - **App name**: `Discogs Sync` (or anything you like)
+   - **App name**: `Discogs Sync` (or anything)
    - **App description**: `Syncs my Discogs collection to Spotify`
-   - **Redirect URI**: Leave this blank for now (we'll add it in Step 4)
+   - **Redirect URI**: Leave blank for now (you'll add it in Step 7)
    - Check the terms box
 5. Click **"Save"**
-6. You'll now see your app's page. Click **"Settings"**
-7. Copy your **Client ID** (you'll need it later)
-8. Click **"View client secret"** and copy your **Client Secret**
-
----
-
-### 4. Create the `env.txt` File
-
-In the `discogs-to-spotify` folder, create a file called `env.txt` with this content:
+6. Click **"Settings"**, then copy your **Client ID**
+7. Click **"View client secret"** and copy your **Client Secret**
+8. Create `env.txt` in the `discogs-to-spotify` folder:
 
 ```
 spotify_client_id:YOUR_CLIENT_ID_HERE
 spotify_client_secret:YOUR_CLIENT_SECRET_HERE
 ```
 
-Replace `YOUR_CLIENT_ID_HERE` and `YOUR_CLIENT_SECRET_HERE` with the values you copied from the Spotify dashboard.
+---
 
 > **Important:** Never commit `env.txt` to GitHub or share it publicly. It is already in `.gitignore`.
 
